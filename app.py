@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from pprint import pprint
 
 # Import our pymongo library, which lets us connect our Flask app to our Mongo database.
@@ -18,12 +18,13 @@ db = client.L3_D3_db
 
 # Set route
 @app.route('/')
-def index():
+def home():
     # Set root_list to document in MongoDB
     root_list = db.list_of_lists_of_lists.find_one()
+    del root_list['_id']
 
     # Return the template with the Lists object passed in
-    return render_template('index.html', root_list=root_list)
+    return jsonify(root_list=root_list)
 
 
 if __name__ == "__main__":

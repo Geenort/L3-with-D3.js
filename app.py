@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from pprint import pprint
 
 # Import our pymongo library, which lets us connect our Flask app to our Mongo database.
 import pymongo
@@ -19,7 +20,7 @@ db = client.L3_D3_db
 @app.route('/')
 def index():
     # Set root_list to document in MongoDB
-    root_list = db.list_of_lists_of_lists.find()
+    root_list = db.list_of_lists_of_lists.find_one()
 
     # Return the template with the Lists object passed in
     return render_template('index.html', root_list=root_list)

@@ -21,6 +21,8 @@ db = client.L3_D3_db
 def home():
     # Set root_list to document in MongoDB
     root_list = db.list_of_lists_of_lists.find_one()
+
+    # delete '_id' key from MongoDB BSON, to be able to jsonify
     del root_list['_id']
 
     # Return the template with the Lists object passed in

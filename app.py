@@ -19,6 +19,10 @@ db = client.L3_D3_db
 # Set route
 @app.route('/')
 def home():
+    return render_template('newpage.html')
+
+@app.route('/data')
+def data():
     # Set root_list to document in MongoDB
     root_list = db.list_of_lists_of_lists.find_one()
 
@@ -26,8 +30,7 @@ def home():
     del root_list['_id']
 
     # Return the template with the Lists object passed in
-    return jsonify(root_list=root_list)
-
+    return jsonify(root_list)
 
 if __name__ == "__main__":
     app.run(debug=True)

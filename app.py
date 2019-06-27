@@ -16,6 +16,12 @@ client = pymongo.MongoClient(conn)
 # Connect to a database. Will create one if not already available.
 db = client.L3_D3_db
 
+# Set root_list to document in MongoDB
+root_list = db.list_of_lists_of_lists.find_one()
+
+# delete '_id' key from MongoDB BSON, to be able to jsonify
+del root_list['_id']
+
 # Set route
 @app.route('/')
 def home():
@@ -23,12 +29,6 @@ def home():
 
 @app.route('/data')
 def data():
-    # Set root_list to document in MongoDB
-    root_list = db.list_of_lists_of_lists.find_one()
-
-    # delete '_id' key from MongoDB BSON, to be able to jsonify
-    del root_list['_id']
-
     # Return the template with the Lists object passed in
     return jsonify(root_list)
 
